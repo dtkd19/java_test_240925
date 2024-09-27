@@ -48,6 +48,8 @@ public class Test04 {
 		}
 		sum2 += Integer.parseInt(num1[0]);
 		System.out.println(num1[0] + " = " + sum2);
+		
+		scan.close();
 
 	}
 
