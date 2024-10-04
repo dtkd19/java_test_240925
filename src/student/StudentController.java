@@ -134,37 +134,38 @@ public class StudentController implements Program {
 
 	}
 
+	// 해당 학번의 index 리턴
+	
+	
 	@Override
-	public void searchStudent(Scanner scan) {
+	public int searchStudent(Scanner scan) {
 		System.out.println("검색할 학생명을 입력해주세요");
 		String searchName = scan.next();
-		boolean found = false;
 
 		for (int i = 0; i < cnt; i++) {
 			if (s[i].getSt_name().equals(searchName)) {
 				System.out.println(s[i]);
-				Subject[] subjects = s[i].getSj();
-
-				if (subjects != null && subjects.length > 0) {
-					for (Subject subject : subjects) {
-						if (subject != null) {
-							System.out.println(subject); 
-						}
-					}
-				} else {
-					System.out.println("등록된 과목이 없습니다.");
-				}
-
-				found = true;
-				break;
+//				Subject[] subjects = s[i].getSj();
+//
+//				if (subjects != null && subjects.length > 0) {
+//					for (Subject subject : subjects) {
+//						if (subject != null) {
+//							System.out.println(subject); 
+//						}
+//					}
+//				} else {
+//					System.out.println("등록된 과목이 없습니다.");
+//				}
+				s[i].printSj();
+				return i;
 			}
-		}
-
-		if (!found) {
-			System.out.println("해당 학생이 목록에 없습니다.");
-		}
+		} 
+		System.out.println("해당 학생이 목록에 없습니다.");
+		return -1;
 
 	}
+	
+	
 
 	@Override
 	public void registerSubject(Scanner scan) {
@@ -194,7 +195,8 @@ public class StudentController implements Program {
 		
 		for (int i = 0; i < cnt; i++) {
 			if (s[i].getSt_name().equals(studentName)) {
-				s[i].deleteStudent(scan);
+				s[i].deleteSubject(scan);
+				System.out.println(s[i].getSt_name() + " 과목 수강철회 완료! ");
 				found = true;
 				break;
 			}

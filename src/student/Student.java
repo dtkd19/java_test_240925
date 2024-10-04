@@ -17,6 +17,13 @@ public class Student {
 	}
 	
 	
+	public Student(String st_num, String st_name, String tel) {
+		this.st_num = st_num;
+		this.st_name = st_name;
+		this.tel = tel;
+	}
+
+
 	public Student(String st_num, String st_name, int st_age, String tel , String st_home) {
 		this.st_num = st_num;
 		this.st_name = st_name;
@@ -35,6 +42,18 @@ public class Student {
 		this.st_home = st_home;
 	}
 	
+	
+	public void printSj() {
+		if(cnt != 0 && sj != null ) {
+			for(int i = 0; i < cnt; i ++) {
+				if(sj[i] != null) {
+					System.out.println(sj[i]);
+				}
+			}
+		} else {
+			System.out.println("등록된 과목이 없습니다.");
+		}
+	}
 	
 	public void registerSubject(Scanner scan) {
 		
@@ -65,7 +84,13 @@ public class Student {
 		
 	}
 	
-	public void deleteStudent(Scanner scan) {
+	public void deleteSubject(Scanner scan) {
+		
+		if(cnt == 0) {
+			System.out.println("수강중인 과목이 없습니다.");
+			return;
+		}
+		
 		System.out.println("삭제할 과목명을 입력해주세요");
 		String delName = scan.next();
 

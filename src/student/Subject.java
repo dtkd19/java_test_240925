@@ -13,6 +13,13 @@ public class Subject {
 	public Subject() {
 		
 	}
+	
+	
+
+	public Subject(String su_code, String su_name) {
+		this.su_code = su_code;
+		this.su_name = su_name;
+	}
 
 
 	public Subject(String su_code, String su_name, int su_point, int su_time, String su_proName, String timetable,

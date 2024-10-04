@@ -55,6 +55,10 @@ public class StudentMain {
 			}
 
 		} while (menu != 8);
+		
+		
+		
+		scan.close();
 	}
 
 }
