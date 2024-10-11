@@ -13,15 +13,25 @@ public class Order extends Menu {
 	public Order() {
 		
 	}
+	
+	
+	
 
-	public Order(String productName, int price, int orderAmount, int salePrice) {
-		super(productName, price);
+	public Order(int productID ,String productName, int price, int orderAmount, int salePrice) {
+		super(productID ,productName, price);
 		this.orderAmount = orderAmount;
 		this.salePrice = price * orderAmount;
 		
 	}
 	
 	
+	
+	// super.toString(); // 부모의 toString 호출
+	
+	public void orderPrint() {
+		System.out.println(super.toString());
+		System.out.println(orderAmount + "개 주문 => 금액 : " + salePrice  );
+	}
 	
 
 	@Override

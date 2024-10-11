@@ -1,6 +1,6 @@
 package sale;
 
-
+import java.util.Objects;
 
 public class Menu {
 
@@ -18,13 +18,19 @@ public class Menu {
 	
 	
 	
+	// equals용 생성자
+	public Menu(String productName) {
+		this.productName = productName;
+	}
+
+
+
+
 	public Menu(String productName, int price) {
 		
 		this.productName = productName;
 		this.price = price;
 	}
-
-
 
 
 	public Menu(int productID, String productName, int price) {
@@ -34,13 +40,12 @@ public class Menu {
 	}
 	
 	
-
 	
+
 	@Override
 	public String toString() {
-		return "Menu [productName=" + productName + ", price=" + price + "]";
+		return "Menu [productID=" + productID + ", productName=" + productName + ", price=" + price + "]";
 	}
-
 
 
 
@@ -62,6 +67,35 @@ public class Menu {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(productID, productName);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Menu other = (Menu) obj;
+		return Objects.equals(productName, other.productName);
+	}
+
+
+	
+	
+
+
+	
+
+	
+
 	
 	
 	

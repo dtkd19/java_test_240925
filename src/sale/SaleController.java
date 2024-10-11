@@ -7,10 +7,37 @@ import java.util.Scanner;
 public class SaleController {
 
 	private List<Menu> menuList = new ArrayList<>();
-	private List<Order> orderList = new ArrayList<>();
+//	private List<Order> orderList = new ArrayList<>();
+	private List<OrderList> order = new ArrayList<>();
+	
 	private int cnt;
 	private int num;
+	private int orderIndex;
+	
+	private int totalSum;
 
+	
+	
+	public void insertMenu() { // 기본으로 존재하는 메뉴 5개
+		
+		Menu m = new Menu(++cnt,"햄버거", 7000);
+		Menu m2 = new Menu(++cnt,"감자튀김", 2400);
+		Menu m3 = new Menu(++cnt,"콜라", 2000);
+		Menu m4 = new Menu(++cnt,"치킨", 20000);
+		Menu m5 = new Menu(++cnt,"피자", 28000);
+		
+	
+		menuList.add(m);
+		menuList.add(m2);
+		menuList.add(m3);
+		menuList.add(m4);
+		menuList.add(m5);
+		
+		
+		
+	}
+	
+	
 	public void addMenu(Scanner scan) {
 
 		String name = null;
@@ -35,29 +62,33 @@ public class SaleController {
 
 		String name = null;
 
-		boolean have = false;
+//		boolean have = false;
 
 		System.out.println("삭제할 제품명을 입력해주세요.");
 
 		name = scan.next();
 
-//		Iterator<Menu> it = menuList.iterator();
-//		while(it.hasNext()) {
-//			Menu m = it.next();
-//			if(m.getProductName().equals(name)) {
+
+		boolean ok = menuList.remove(new Menu(name));
+		
+		if(ok) {
+			System.out.println("삭제완료");
+		} else {
+			System.out.println("삭제 할 상품이 없습니다.");
+		}
+		
+		
+		
+		
+		
+		
+//		for (Menu m : menuList) {
+//			if (m.getProductName().equals(name)) {
 //				menuList.remove(m);
-//			} else {
-//				System.out.println("삭제할 상품이 없습니다.");
+//				have = true;
+//				break;
 //			}
 //		}
-
-		for (Menu m : menuList) {
-			if (m.getProductName().equals(name)) {
-				menuList.remove(m);
-				have = true;
-				break;
-			}
-		}
 
 //		Menu m = null;
 //		
@@ -71,9 +102,9 @@ public class SaleController {
 //			 }
 //		}
 
-		if (have == false) {
-			System.out.println(" 삭제할 제품이 존재하지 않습니다.");
-		}
+//		if (have == false) {
+//			System.out.println(" 삭제할 제품이 존재하지 않습니다.");
+//		}
 
 	}
 
@@ -119,51 +150,72 @@ public class SaleController {
 		int amount = 0;
 		int salePrice = 0;
 		boolean have = false;
+		
+		int index = 0;
+		
+		this.order.add(new OrderList((orderIndex+1)));
 
-		System.out.println(" 주문 할 제품넘버와, 갯수를 적어주세요 ");
-
-		num2 = scan.nextInt();
-		amount = scan.nextInt();
-
-		for (Menu m : menuList) {
-			if (m.getProductID() == num2) {
-				name = m.getProductName();
-				price = m.getPrice();
-				have = true;
-				break;
+		int or = -1;
+		
+		
+		do {
+			
+			System.out.println(" 주문 할 제품넘버와, 갯수를 적어주세요 ");
+			
+			num2 = scan.nextInt();
+			amount = scan.nextInt();
+			
+			for (Menu m : menuList) {
+				if (m.getProductID() == num2) {
+					name = m.getProductName();
+					price = m.getPrice();
+					index = m.getProductID();
+					have = true;
+					break;
+				}
 			}
-		}
-
-		if (have == false) {
-			System.out.println(" 찾으신 제품넘버는 존재하지 않습니다.");
-		} else {
-
-			salePrice = price * amount;
-
-			Order o = new Order(name, price, amount, salePrice);
-
-			num++;
-
-			o.setOrderNum(num);
-
-			orderList.add(o);
-		}
+			
+			if (have == false) {
+				System.out.println(" 찾으신 제품넘버는 존재하지 않습니다.");
+			} else {
+				
+				salePrice = price * amount;
+				
+				Order o = new Order( index ,name, price, amount, salePrice);
+				
+				num++;
+				
+				o.setOrderNum(num);
+				
+				this.order.get(orderIndex).addOrder(o);		
+				
+			}	
+			
+			System.out.println(" 계속 주문 진행 1/0  >>");
+			
+			or = scan.nextInt();
+			
+		} while (or == 1);
+		
+		
+		orderIndex++;
+				
 
 	}
 
 	public void orderPrint(Scanner scan) {
+		
 
-		System.out.println(" 출력할 내역의 주문번호를 입력해주세요 ");
+		System.out.println(" 주문내역 ");
 
-		int num2 = 0;
 
-		num2 = scan.nextInt();
-
-		for (Order o : orderList) {
-			if (o.getOrderNum() == num2) {
-				System.out.println(o);
-			}
+		for (Order o : order.get(orderIndex-1).getOrderList()) {
+			
+			totalSum += o.getSalePrice();
+			o.orderPrint();
 		}
+		
+		System.out.println("총 지불금액 : " + totalSum);
 
 	}
 
@@ -171,10 +223,13 @@ public class SaleController {
 
 		System.out.println("-- 전체 판매 내역 --");
 
-		for (Order o : orderList) {
-			System.out.println(o);
+		for (OrderList o : order) {
+			System.out.println(o);	
 		}
-
+		System.out.println("-------------");
+		System.out.println("총 수입 : " + totalSum );
+		
+		
 	}
 
 }

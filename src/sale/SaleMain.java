@@ -20,6 +20,8 @@ public class SaleMain {
 		
 		int menu = 0;
 		
+		sc.insertMenu();
+		
 		while(menu != 8 ) {
 			
 			System.out.println(" 메뉴를 선택해 주세요.");
