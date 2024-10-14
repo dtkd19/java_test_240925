@@ -36,16 +36,17 @@ public class StreamEx01 {
 		list.stream().filter(n-> n.getAge() >= 15).forEach(n -> n.setPrice(100)); // 15세 이상 비용
 		list.stream().filter(n-> n.getAge() < 15).forEach(n -> n.setPrice(50));  // 15세 미만 비용
 		
-		int sum = list.stream().mapToInt(n -> n.getPrice()).sum();
-		
-		System.out.println("총 비용 : " + sum );
 		
 		list.stream().forEach(n -> System.out.println(n)); // 총 고객명단
 		
+		int sum = list.stream().mapToInt(n -> n.getPrice()).sum();
+		
+		System.out.println(" 총 비용 : " + sum  + "만원");
 		 
 		// 20세 이상 이름 내림차순 출력 
 		System.out.println();
 		
+		System.out.println("-- 20세이상 명단 --");
 		list.stream().sorted(new Comparator<Customer>() {
 
 			@Override
@@ -56,6 +57,15 @@ public class StreamEx01 {
 			
 		}).filter(n -> n.getAge() >= 20)
 		.forEach(n -> System.out.println(n));
+		
+		
+		System.out.println("클래스 구현사용을 보기위한 명단 출력");
+		list.stream()
+		.sorted() // 기존 클래스에서 구현
+		.forEach(n -> System.out.println(n));
+		
+		// 익명클래스 사용할경우 Comparator 대상값이 (매개변수) 2개
+		// 클래스 내부에서 구현할 경우 Comparable 대상값이 (매개변수) 1개
 		
 		
 	}
